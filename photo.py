@@ -31,7 +31,3 @@ def image_cap(name):
             img_counter += 1
 
     cam.release()
-
-
-def get_img():
-    return img_name
