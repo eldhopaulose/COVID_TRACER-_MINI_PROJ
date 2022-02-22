@@ -1,4 +1,3 @@
-from cProfile import label
 import photo
 from tkinter import *
 import threading
@@ -38,13 +37,16 @@ retry_button = Button(top, text='Retry', command=retry,
                       font=('calibre', 10, 'normal'))
 retry_button.grid(row=3, column=1, padx=50, pady=15, columnspan=2, sticky=W)
 retry_button["state"] = "disabled"
-complete_label = Label(top, text="Completed!", font=('calibre', 20, 'normal'), fg="green")
+complete_label = Label(top, text="Completed!", font=(
+    'calibre', 20, 'normal'), fg="green")
 complete_label.grid(row=4, column=1, padx=50, pady=15, columnspan=2)
 complete_label.grid_forget()
 
+
 def after_done():
     retry_button["state"] = "normal"
-    complete_label.grid(row=4, column=0, padx=50, pady=15, columnspan=2, sticky=W)
+    complete_label.grid(row=4, column=0, padx=50,
+                        pady=15, columnspan=2, sticky=W)
 
 
 def submit_data():
@@ -60,7 +62,7 @@ def submit_data():
         "temp": temp_var.get(),
         "image": url
     }
-    print(values)
+    print(values) # Getting the all values for databsase storage
 
 
 name_label = Label(top, text='Full Name: ', font=('calibre', 10, 'bold'))

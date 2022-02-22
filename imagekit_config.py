@@ -7,7 +7,6 @@ imagekit = ImageKit(
 )
 
 def upload(image_name):
-    print(image_name)
     return imagekit.upload(
         file=open(image_name, "rb"),
         file_name=image_name,
