@@ -1,0 +1,1 @@
+"./images/capture_{}.png".format(time.time() * 1000)
