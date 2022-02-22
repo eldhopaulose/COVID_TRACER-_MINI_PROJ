@@ -1,12 +1,11 @@
 from unicodedata import name
 import cv2
 
-cv2.namedWindow("test")
-cam = cv2.VideoCapture(0)
 img_name = ''
 
-
 def image_cap(name):
+    cv2.namedWindow("test")
+    cam = cv2.VideoCapture(0)
     global img_name
     img_counter = 0
 
@@ -31,3 +30,15 @@ def image_cap(name):
             img_counter += 1
 
     cam.release()
+
+cam = cv2.VideoCapture(0)
+def get_frame():
+    # img = cv2.namedWindow("test")
+    ret, frame = cam.read()
+    if not ret:
+        return None
+    return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+def release():
+    cam.release()
+    cv2.destroyAllWindows()
