@@ -1,3 +1,7 @@
+import board
+import busio as io
+import adafruit_mlx90614
+from time import sleep
 import photo
 from tkinter import *
 import threading
@@ -6,9 +10,11 @@ import PIL.ImageTk
 import cv2
 import time
 import imagekit_config
+import config
 import random
 
 top = Tk()
+top.title('COVID TRACER')
 
 name_var = StringVar()
 mobile_var = StringVar()
@@ -65,13 +71,26 @@ def submit_data():
         "temp": temp_var.get(),
         "image": url
     }
+    x = config.mycol.insert_one(values)
     print(values) # Getting the all values for databsase storage
 
 
 def read_temperature():
     # generate a randum integer between 0 and 100
-    temp = random.randint(0, 100)
-    temp_var.set(str(temp))
+    # temp = random.randint(0, 100)
+    # temp_var.set(str(temp))
+    io_port = io.I2C(board.SCL, board.SDA, frequency=100000)
+    sensor = adafruit_mlx90614.MLX90614(io_port)
+
+    anbientTemp = "{:.2f}".format(sensor.ambient_temperature)
+    targetTemp = "{:.2f}".format(sensor.object_temperature)
+
+    temp_var.set(str(targetTemp))
+
+    sleep(1)
+
+    print(anbientTemp)
+    print(targetTemp)
 
 
 name_label = Label(top, text='Full Name : ', font=('calibre', 10, 'bold'))
