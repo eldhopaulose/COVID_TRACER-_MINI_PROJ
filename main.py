@@ -1,3 +1,4 @@
+import os
 import board
 import busio as io
 import adafruit_mlx90614
@@ -76,9 +77,14 @@ def submit_data():
     }
     x = config.mycol.insert_one(values)
     print(values) # Getting the all values for databsase storage
+    if os.path.exists(img_name):
+        os.remove(img_name)
+        print('sussces!!!!!!')
+    else:
+        print("The file does not exist")
     snd_email = email_var.get() #Geting value of email
     body_temp = temp_var.get()
-    body_temp_check = float(body_temp)
+    body_temp_check = float(body_temp)#Geting temperature value in float
     print(body_temp_check)
     if 38 > body_temp_check:
         send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n ' + 'Normal:-\t' + body_temp + 'degrees Celsius')
