@@ -78,10 +78,23 @@ def submit_data():
     print(values) # Getting the all values for databsase storage
     snd_email = email_var.get() #Geting value of email
     body_temp = temp_var.get()
-    send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n ' + body_temp + 'degrees Celsius')
-    send_email.conn.quit()
-    print("mail snd")
-    print(snd_email)
+    body_temp_check = float(body_temp)
+    print(body_temp_check)
+    if 38 > body_temp_check:
+        send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n ' + 'Normal:-\t' + body_temp + 'degrees Celsius')
+        send_email.conn.quit()
+        print("mail snd")
+        print(snd_email)
+    elif 38 == body_temp_check:
+        send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n '+ 'High:-\t' + body_temp + 'degrees Celsius')
+        send_email.conn.quit()
+        print("mail snd")
+        print(snd_email)
+    elif body_temp_check > 38:
+        send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n '+ 'High:-\t' + body_temp + 'degrees Celsius')
+        send_email.conn.quit()
+        print("mail snd")
+        print(snd_email)
 
 def read_temperature():
     # generate a randum integer between 0 and 100
