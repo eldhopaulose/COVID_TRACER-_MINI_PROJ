@@ -12,7 +12,9 @@ import cv2
 import time
 import imagekit_config
 import config
-import send_email
+import send_email_m
+import sms
+
 
 top = Tk()
 top.title('COVID TRACER')
@@ -82,25 +84,103 @@ def submit_data():
         print('sussces!!!!!!')
     else:
         print("The file does not exist")
-    snd_email = email_var.get() #Geting value of email
+    # snd_email = email_var.get() #Geting value of email
+    snd_email = ''
     body_temp = temp_var.get()
     body_temp_check = float(body_temp)#Geting temperature value in float
     print(body_temp_check)
+
     if 38 > body_temp_check:
-        send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n ' + 'Normal:-\t' + body_temp + 'degrees Celsius')
-        send_email.conn.quit()
+        # send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n ' + 'Normal:-\t' + body_temp + 'degrees Celsius')
+        # send_email.conn.quit()
+        
+        message = '''From: From Person <eldhopaulose0485@yandex.com>
+To: To Person <eldhopaulose0485@gmail.com>
+Subject:  Body temperature
+
+Temperature <''' + body_temp + '''Normal Temperature '''
+
+        message.format(body_temp)
+
+        with send_email_m.server:  
+            send_email_m.server.ehlo()
+    
+            send_email_m.server.login(send_email_m.sender , send_email_m.password)
+            send_email_m.server.sendmail(send_email_m.sender ,send_email_m.sender,message )
+            send_email_m.server.quit()
         print("mail snd")
         print(snd_email)
+
+        #sms
+        sms.client.messages.create(  
+                              messaging_service_sid='MG53d82a72162bbd2812d659a179ac893d', 
+                              body='''Temperature <''' + body_temp + '''Normal Temperature ''',      
+                              to='+918078466527' 
+                          ) 
+
     elif 38 == body_temp_check:
-        send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n '+ 'High:-\t' + body_temp + 'degrees Celsius')
-        send_email.conn.quit()
+        # send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n '+ 'High:-\t' + body_temp + 'degrees Celsius')
+        # send_email.conn.quit()
+        # send_email.server.sendmail(send_email.sender ,send_email.sender,message )
+
+        message = '''From: From Person <eldhopaulose0485@yandex.com>
+To: To Person <eldhopaulose0485@gmail.com>
+Subject:  Body temperature
+
+Temperature >''' + body_temp + '''degrees Celsius
+
+ High Temperature - Dierected to RTPCR Test '''
+
+        
+        with send_email_m.server:  
+            send_email_m.server.ehlo()
+    
+            send_email_m.server.login(send_email_m.sender , send_email_m.password)
+            send_email_m.server.sendmail(send_email_m.sender ,send_email_m.sender,message )
+            send_email_m.server.quit()
         print("mail snd")
         print(snd_email)
+
+
+        #sms
+        sms.client.messages.create(  
+                              messaging_service_sid='MG53d82a72162bbd2812d659a179ac893d', 
+                              body='''Temperature >''' + body_temp + '''degrees CelsiusHigh Temperature - Dierected to RTPCR Test ''',      
+                              to='+918078466527' 
+                          ) 
+
+
     elif body_temp_check > 38:
-        send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n '+ 'High:-\t' + body_temp + 'degrees Celsius')
-        send_email.conn.quit()
+        # send_email.conn.sendmail('eldhopaulose2001@gmail.com',snd_email,'Subject: Body Temperature \n\n '+ 'High:-\t' + body_temp + 'degrees Celsius')
+        # send_email.conn.quit()
+
+        message = '''From: From Person <eldhopaulose0485@yandex.com>
+To: To Person <eldhopaulose0485@gmail.com>
+Subject:  Body temperature
+
+Temperature >''' + body_temp + '''degrees Celsius
+
+ High Temperature - Dierected to RTPCR Test '''
+        message.format(body_temp)
+
+        with send_email_m.server:  
+            send_email_m.server.ehlo()
+    
+            send_email_m.server.login(send_email_m.sender , send_email_m.password)
+            send_email_m.server.sendmail(send_email_m.sender ,send_email_m.sender,message )
+            send_email_m.server.quit()
+
         print("mail snd")
         print(snd_email)
+
+        
+        #sms
+        sms.client.messages.create(  
+                              messaging_service_sid='MG53d82a72162bbd2812d659a179ac893d', 
+                              body='''Temperature >''' + body_temp + '''degrees CelsiusHigh Temperature - Dierected to RTPCR Test ''',   
+                              to='+918078466527' 
+                          ) 
+
 
 def read_temperature():
     # generate a randum integer between 0 and 100
